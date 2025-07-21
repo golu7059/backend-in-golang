@@ -3,6 +3,7 @@ package config
 import (
 	"database/sql"
 	"log"
+
 	_ "github.com/lib/pq"
 )
 
@@ -14,10 +15,12 @@ func ConnectDB() {
 	DB, err = sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal("Error connecting to DB:", err)
+		panic(err)
 	}
-	err = DB.Ping()
-	if err != nil {
+
+	if err = DB.Ping(); err != nil {
 		log.Fatal("Ping error:", err)
+		panic(err)
 	}
 	log.Println("Connected to the database")
 }
